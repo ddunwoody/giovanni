@@ -6,7 +6,7 @@ namespace :deploy do
       mkdir -p #{dirs}
       chmod g+w #{dirs}
       chown -R #{application}:tomcat #{dirs}
-      ln -s #{current_path} /home/#{application}
+      ln -nfs #{current_path} /home/#{application}
     CMDS
 
     utils.install_template('init.d/tomcat.erb', "/etc/init.d/#{application}")
@@ -29,8 +29,8 @@ namespace :deploy do
   task :finalize_update do
     set :run_method, :run
     script.run_all <<-CMDS
-      ln -s #{log_path} #{latest_release}/logs
-      ln -s #{tmp_path} #{latest_release}/temp
+      ln -nfs #{log_path} #{latest_release}/logs
+      ln -nfs #{tmp_path} #{latest_release}/temp
       mkdir #{['bin', 'conf', 'lib', 'work'].map { |d| File.join(latest_release, d) }.join(' ')}
       cp /opt/tomcat/conf/* #{latest_release}/conf
       unzip -q #{File.join(latest_release, webapps_dir, nexus.filename)} -d #{File.join(latest_release, webapps_dir, application)}

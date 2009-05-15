@@ -10,7 +10,7 @@ namespace :tomcat do
       script.run_all <<-CMDS
         mkdir -p /opt/apache-tomcat-6.0.18
         mv #{dir}/* /opt/apache-tomcat-6.0.18
-        ln -s /opt/apache-tomcat-6.0.18 /opt/tomcat
+        ln -nfs /opt/apache-tomcat-6.0.18 /opt/tomcat
       CMDS
       permissions.normalise '/opt/apache-tomcat-6.0.18', :group => 'tomcat'
     end
