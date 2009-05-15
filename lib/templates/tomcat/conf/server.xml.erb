@@ -129,10 +129,8 @@
 
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html -->
-        <!--
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"  
-               prefix="localhost_access_log." suffix=".txt" pattern="common" resolveHosts="false"/>
-        -->
+               prefix="localhost_access_log." suffix=".log" pattern="%{X-Cluster-Client-Ip}i %l %u %t %r %s %b" resolveHosts="false"/>
 
       </Host>
     </Engine>
