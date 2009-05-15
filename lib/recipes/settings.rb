@@ -16,7 +16,12 @@ raise Capistrano::Error, 'A pom.xml file must exist in the current directory' un
 pom = REXML::Document.new(File.open('pom.xml'))
 
 [:group_id, :artifact_id, :version].each do |var|
-  element = REXML::XPath.first(pom, "/project/#{var.to_s.gsub('_i', 'I')}")
-  element ||= REXML::XPath.first(pom, "/project/parent/#{var.to_s.gsub('_i', 'I')}")
-  set var, element.text
+  if exists?(var)
+    puts "Using explicitly-set #{var} of '#{fetch(var)}'"
+  else
+    element = REXML::XPath.first(pom, "/project/#{var.to_s.gsub('_i', 'I')}")
+    element ||= REXML::XPath.first(pom, "/project/parent/#{var.to_s.gsub('_i', 'I')}")
+    set var, element.text
+    puts "Using #{var} of '#{element.text}' read from pom.xml"
+  end
 end
