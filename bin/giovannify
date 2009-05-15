@@ -4,9 +4,14 @@ require 'erb'
 require 'rexml/document'
 include REXML
 
-abort 'You must have a pom.xml file in the current directory' unless File.exists?('pom.xml')
 
-application = XPath.first(Document.new(File.open('pom.xml')), '//project/artifactId').text
+if File.exists?('pom.xml')
+  application = XPath.first(Document.new(File.open('pom.xml')), '//project/artifactId').text
+  puts "Setting application name to '#{application}' (from pom.xml)"
+else
+  puts 'WARNING: No pom.xml file found in the current directory'
+  application = 'TODO: set application name'
+end
 
 def render source, destination, binding
   File.open(destination, 'w') { |f| f << ERB.new(File.read(source)).result(binding) }
@@ -27,3 +32,5 @@ Dir[File.join(File.dirname(Gem.bin_path('giovanni')), '..', 'cap_template/**/*')
     FileUtils.copy(source, destination)
   end
 end
+
+puts 'Giovannification complete.'
