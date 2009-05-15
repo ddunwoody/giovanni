@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'erb'
+require 'rexml/document'
+include REXML
+
+abort 'You must have a pom.xml file in the current directory' unless File.exists?('pom.xml')
+
+application = XPath.first(Document.new(File.open('pom.xml')), '//project/artifactId').text
+
+def render source, destination, binding
+  File.open(destination, 'w') { |f| f << ERB.new(File.read(source)).result(binding) }
+end
+
+Dir[File.join(File.dirname(Gem.bin_path('giovanni')), '..', 'cap_template/**/*')].each do |source|
+  destination = source[/cap_template.*/][13..-1].gsub(/\.erb$/, '')
+  puts "WARNING: overwriting #{destination}" if File.exists?(destination)
+  if File.directory?(source)
+    FileUtils.mkdir_p destination
+  elsif File.basename(source) == 'stage.rb.erb'
+    ['development', 'integration', 'staging', 'production'].each do |stage|
+      render source, File.join(File.dirname(destination), stage + '.rb'), binding
+    end
+  elsif source.end_with?('.erb')
+    render source, destination, binding
+  else
+    FileUtils.copy(source, destination)
+  end
+end

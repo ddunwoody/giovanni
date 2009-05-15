@@ -1,0 +1,131 @@
+#!/bin/bash
+#
+# <%= application %>     This shell script takes care of starting and stopping Tomcat for <%= application %>
+#
+# chkconfig: - 80 20
+#
+### BEGIN INIT INFO
+# Provides: <%= application %>
+# Required-Start: $network $syslog
+# Required-Stop: $network $syslog
+# Default-Start:
+# Default-Stop:
+# Description: Tomcat instance for <%= application %>
+# Short-Description: start and stop <%= application %>
+### END INIT INFO
+#
+# Based on the init script from the tomcat5 RHEL RPM
+
+if [ -r "/etc/rc.d/init.d/functions" ]; then
+	. /etc/rc.d/init.d/functions
+fi
+
+RETVAL="0"
+
+APPNAME=<%= application %>
+
+LOCK=/var/lock/subsys/$APPNAME
+SHUTDOWN_WAIT=10
+
+export CATALINA_BASE=/var/lib/$APPNAME/current
+export CATALINA_PID=/var/run/$APPNAME.pid
+
+function start() {
+	echo -n "Starting Tomcat for $APPNAME: "
+	if [ -f $LOCK ]; then
+		if [ -f $CATALINA_PID ]; then
+			read kpid < $CATALINA_PID
+			if checkpid $kpid 2>&1; then
+				echo "$APPNAME process already running"
+				return -1
+			else
+				echo "lock file found but no process running for"
+				echo "pid $kpid, continuing"
+			fi
+		fi
+	fi
+	touch $CATALINA_PID
+	chown $APPNAME:tomcat $CATALINA_PID
+	su $APPNAME -c '/opt/tomcat/bin/startup.sh' 2>&1 > /dev/null
+	RETVAL="$?"
+	if [ "$RETVAL" -eq "0" ]; then
+		echo_success
+		touch $LOCK
+	else
+		echo_failure
+	fi
+}
+
+function stop() {
+	echo -n "Stopping Tomcat for $APPNAME: "
+	if [ -f $LOCK ]; then
+	su $APPNAME -c '/opt/tomcat/bin/shutdown.sh' 2>&1 > /dev/null
+		RETVAL="$?"
+		if [ "$RETVAL" -eq "0" ]; then
+			count="0"
+			if [ -f $CATALINA_PID ]; then
+				read kpid < $CATALINA_PID
+				until [ "`ps --pid $kpid | grep -c $kpid`" -eq "0" ] || [ "$count" -gt "$SHUTDOWN_WAIT" ]; do
+					echo -n -e "\nwaiting for process $kpid to exit"
+					sleep 1
+					let count="$count+1"
+				done
+				if [ "$count" -gt "$SHUTDOWN_WAIT" ]; then
+					echo -n -e "\nkilling process $kpid which didn't stop after $SHUTDOWN_WAIT seconds"
+					su $APPNAME -c '/opt/tomcat/bin/shutdown.sh -force' 2>&1 > /dev/null
+				fi
+				echo_success
+				if [ "$count" -gt "0" ]; then
+					echo -n -e "\n"
+				fi
+			fi
+			rm -f $LOCK $CATALINA_PID
+		else
+			echo_failure
+		fi
+	fi
+}
+
+function status() {
+	RETVAL="1"
+	if [ -f $CATALINA_PID ]; then
+		read kpid < $CATALINA_PID
+		if checkpid $kpid 2>&1; then
+			echo "$APPNAME is already running ($kpid)"
+			RETVAL="0"
+		else
+			echo "lock file found but no process running for pid $kpid"
+		fi
+	else
+		pid=`pgrep -u $APPNAME java`
+		if [ -n "$pid" ]; then
+			echo "$APPNAME running ($pid) but no PID file exists"
+			RETVAL="0"
+		else
+			echo "$APPNAME is stopped"
+		fi
+	fi
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		sleep 2
+		start
+		;;
+	status)
+		status
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+		;;
+esac
+
+exit $RETVAL

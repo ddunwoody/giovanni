@@ -1,0 +1,7 @@
+load 'deploy' if respond_to?(:namespace) # cap2 differentiator
+load 'config/deploy'
+load 'config/deploy/requirements'
+
+Dir['config/deploy/recipes/**/*.rb'].each do |recipe|
+  load recipe
+end
