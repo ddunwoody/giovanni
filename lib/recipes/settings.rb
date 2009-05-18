@@ -11,17 +11,16 @@ set :webapps_dir, 'webapps'
 set :source, Giovanni::SCM::Nexus.new(self)
 set :repository, 'http://spangler.intra.btexact.com:8081/nexus/content/repositories'
 
-raise Capistrano::Error, 'A pom.xml file must exist in the current directory' unless File.exist?('pom.xml')
-
-pom = REXML::Document.new(File.open('pom.xml'))
-
 [:group_id, :artifact_id, :version].each do |var|
   if exists?(var)
     puts "Using explicitly-set #{var} of '#{fetch(var)}'"
-  else
+  elsif File.exist?('pom.xml')
+    pom = REXML::Document.new(File.open('pom.xml'))
     element = REXML::XPath.first(pom, "/project/#{var.to_s.gsub('_i', 'I')}")
     element ||= REXML::XPath.first(pom, "/project/parent/#{var.to_s.gsub('_i', 'I')}")
     set var, element.text
     puts "Using #{var} of '#{element.text}' read from pom.xml"
+  else
+    raise Capistrano::Error, 'Either pom.xml must exist in the current directory, or group_id, artifact_id and version must be explicitly set'
   end
 end
