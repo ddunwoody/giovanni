@@ -12,6 +12,8 @@ Further documentation is available in the RDocs, as well as in the DSO wiki at h
 
 Giovanni is named after {Giovanni da Capistrano}[http://en.wikipedia.org/wiki/Giovanni_da_Capistrano].
 
+See {this page}[http://wiki.capify.org/index.php/Default_Execution_Path] on the Capify wiki for an overview of how Capistrano works by default.
+
 = Revision History
 
 == 0.0.3 - In development

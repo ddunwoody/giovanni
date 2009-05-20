@@ -1,5 +1,9 @@
 # (Re)defines a number of tasks in Capistrano's _deploy_ namespace
 #
+# This inspiration for this way of doing things came from
+# {this page}[http://wiki.capify.org/index.php/Neutralise_Capistrano_Default_Methods]
+# on the Capify wiki.
+#
 # ==== setup
 # Perform the initial setup of a server to have _application_ deployed to it.
 #

@@ -1,4 +1,6 @@
 # Defines the set of default options for Giovanni-enhanced Capistrano deployments
+#
+# The Variables[http://wiki.capify.org/index.php/Variables] wiki page at capify.org comes as recommended reading
 default_run_options[:pty] = true
 
 set :stage_dir, 'config/deploy/stages'
