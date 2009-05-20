@@ -1,3 +1,5 @@
+# Main entry point to the _Giovanni_ code
+
 require 'capistrano'
 require 'capitate'
 require 'rexml/document'

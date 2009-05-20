@@ -1,3 +1,30 @@
+# (Re)defines a number of tasks in Capistrano's _deploy_ namespace
+#
+# ==== setup
+# Perform the initial setup of a server to have _application_ deployed to it.
+#
+# Creates an _application_ user in the _tomcat_ group
+#
+# Creates the following directories
+# * <tt>/var/lib/_application_</tt>: Tomcat effectively runs from here
+# * <tt>/var/log/_application_</tt>: Log files go here
+# * <tt>/var/tmp/_application_</tt>: Temporary files go here
+#
+# Creates <tt>/etc/init.d/_application_</tt> and sets it up to start automatically
+#
+# _setup_ does *not* deploy the application or start it up
+#
+# <i>deploy:check</i> can be run after <i>deploy:setup</i> to verify success
+#
+# ==== teardown
+# Removes all traces of _application_ from the server.
+#
+# Deletes the directories, startup script and user created by <i>deploy:setup</i>
+#
+# ==== start, stop, restart
+# Starts, stops or restarts the Tomcat instance for _application_.
+
+
 namespace :deploy do
   desc 'Prepares one or more servers for deployment'
   task :setup do
@@ -26,6 +53,8 @@ namespace :deploy do
     CMDS
   end
 
+  # This task is run by Capistrano after uploading code and symlinking current, but before
+  # restarting the app server
   task :finalize_update do
     set :run_method, :run
     script.run_all <<-CMDS

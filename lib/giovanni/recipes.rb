@@ -1,4 +1,4 @@
-# Load recipes
+# Load internal recipes from the recipes directory
 
 # Load settings first
 settings = File.expand_path(File.dirname(__FILE__) + '/../recipes/settings.rb')

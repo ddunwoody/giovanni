@@ -1,3 +1,4 @@
+# Defines the set of default options for Giovanni-enhanced Capistrano deployments
 default_run_options[:pty] = true
 
 set :stage_dir, 'config/deploy/stages'

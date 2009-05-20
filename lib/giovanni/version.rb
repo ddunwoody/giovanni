@@ -1,5 +1,5 @@
 module Giovanni
-  class VERSION
+  class VERSION # :nodoc:
     MAJOR = 0
     MINOR = 0
     TINY  = 3

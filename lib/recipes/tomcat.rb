@@ -1,3 +1,28 @@
+# Defines the <tt>tomcat:install</tt> and <tt>tomcat:uninstall</tt> tasks
+#
+# === tomcat:install
+#
+# Downloads Tomcat 6 from Nexus repository and installs it to
+# <tt>/opt/apache-tomcat-_version_</tt>
+#
+# <tt>/opt/tomcat</tt> is symlinked to this location
+#
+# A _tomcat_ user and group are created, and the contents of
+# the installation directory are set to be owned by the _tomcat_
+# group.
+#
+# === tomcat:uninstall
+#
+# Removes <tt>/opt/tomcat</tt> and <tt>/opt/apache-tomcat-_version_</tt>
+#
+# Removes _tomcat_ group
+#
+# Note that removal of the _tomcat_ group will fail if any
+# applications have been deployed, as their user(s) primary
+# group will be the _tomcat_ group.
+#
+# These applications should be uninstalled with <tt>deploy:teardown</tt>
+# before running <tt>tomcat:uninstall</tt>
 namespace :tomcat do
   desc 'Install shared Tomcat instance'
   task :install, :roles => :app do

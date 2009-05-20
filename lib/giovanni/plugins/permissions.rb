@@ -1,4 +1,17 @@
+# Holds code to "normalise" permissions
 module Giovanni::Plugins::Permissions
+  # Sets permissions and ownerships recursively to "normal" values
+  #
+  # Normal values are defined as
+  # ==== Files
+  # * read and write for owner and group, no access for others
+  # * additionally, the execute flag is set on files ending with .sh
+  # ==== Directories
+  # * read, write, execute for owner and group, no access for others
+  #
+  # ==== Options
+  # +owner+: change file and directory ownership to this user
+  # +group+: change file and directory group owner to this group
   def normalise path, options = {}
     script.run_all <<-CMDS
       bash -c 'find #{path} -type d | xargs -r chmod 770'

@@ -1,6 +1,12 @@
+# This module provides helper methods for Giovanni::SCM::Nexus.
+#
+# This existence of this module may be a mistake in it's current
+# form; we need to expose a download method to users of Giovanni,
+# but this is not the right way to do it.
 module Giovanni::Plugins::Nexus
   include REXML
 
+  # Returns the filename of a WAR file, handling SNAPSHOT versions
   def filename
     if is_snapshot?
       metadata_url = folder + '/maven-metadata.xml'
@@ -21,8 +27,9 @@ module Giovanni::Plugins::Nexus
     run download_command(destination)
   end
 
-  # TODO: sha1sum
+  # Called by Giovanni::SCM::Nexus to get the command to do the download
   def download_command(destination)
+    # TODO: sha1sum
     "mkdir -p #{destination} && wget #{verbose} #{url} -P #{destination}"
   end
 
@@ -34,6 +41,7 @@ module Giovanni::Plugins::Nexus
     "#{repository}/#{division}/#{group_path}/#{artifact_id}/#{version}"
   end
 
+  # figure out which repository in Nexus to look at
   def division
     is_snapshot? ? 'snapshots' : 'releases'
   end
@@ -45,6 +53,7 @@ module Giovanni::Plugins::Nexus
   [:repository, :group_id, :artifact_id, :version].each do |var|
     define_method var do
       # we can be called as a plugin, but we are also included in the Nexus SCM class
+      # FIXME: this is hideously ugly and needs to be refactored.
       if respond_to? :configuration
         raise Capistrano::Error, "you must set a #{var} with :set #{var}, foo" unless variable(var)
         variable(var)
