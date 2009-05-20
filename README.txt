@@ -1,13 +1,25 @@
-= giovanni
+= Giovanni
 
-See https://collaborate.bt.com/wiki/display/DSO/Tomcat+migration for details
+Giovanni is a Gem that provides helper methods for deploying Tomcat-based applications on RedHat Linux.
 
-= History
+It consists of three main parts:
 
-* 0.0.2 - 20th May 2009
+1. set of Capistrano recipes (such as tomcat:install, and new behaviour for the default Capistrano deploy tasks)
+1. A new SCM module for Capistrano that downloads the release from a Nexus repository
+1. A shell script _giovannify_ which can be used in preference to _capify_
 
-Used for deploying ACF and Provisioning to live
+Further documentation is available in the RDocs, as well as in the DSO wiki at https://collaborate.bt.com/wiki/display/DSO/Giovanni.
 
-* 0.0.1 - 15th May 2009
+Giovanni is named after {Giovanni da Capistrano}[http://en.wikipedia.org/wiki/Giovanni_da_Capistrano].
 
-Tested with ACF 1.1
+= Revision History
+
+== 0.0.2 - 20th May 2009
+
+* Support generating a TNSnames-style Oracle DS
+* Tested with ACF 1.1 and 1.2, and Provisioning 2.2
+* Merged some changes from Chida's Confluence deployment
+
+== 0.0.1 - 15th May 2009
+
+* Tested with ACF 1.1
