@@ -18,7 +18,8 @@ See {this page}[http://wiki.capify.org/index.php/Default_Execution_Path] on the 
 
 == 0.0.3 - In development
 
-* Rename +deploy:clean+ to +deploy:teardown+ to make it more explicit it's the opposite of +deploy:setup+
+* Rename <tt>deploy:clean</tt> to <tt>deploy:teardown</tt> to make it more explicit it's the opposite of <tt>deploy:setup</tt>
+* Extensively update RDocs
 
 == 0.0.2 - 20th May 2009
 
