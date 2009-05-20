@@ -17,7 +17,7 @@ namespace :deploy do
   end
 
   desc 'Removes a deployment setup from one or more servers'
-  task :clean, :on_error => :continue do
+  task :teardown, :on_error => :continue do
     script.run_all <<-CMDS
       rm -rf #{dirs}
       /usr/sbin/userdel -rf #{application}

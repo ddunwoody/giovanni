@@ -14,6 +14,10 @@ Giovanni is named after {Giovanni da Capistrano}[http://en.wikipedia.org/wiki/Gi
 
 = Revision History
 
+== 0.0.3 - In development
+
+* Rename +deploy:clean+ to +deploy:teardown+ to make it more explicit it's the opposite of +deploy:setup+
+
 == 0.0.2 - 20th May 2009
 
 * Support generating a TNSnames-style Oracle DS
