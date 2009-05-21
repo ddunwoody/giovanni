@@ -1,5 +1,14 @@
-=== 0.0.1 / 2009-04-23
+=== 0.0.3 - In development
 
-* First version
-  * Birthday!
+* Rename <tt>deploy:clean</tt> to <tt>deploy:teardown</tt> to make it more explicit it's the opposite of <tt>deploy:setup</tt>
+* Extensively update RDocs
 
+=== 0.0.2 - 20th May 2009
+
+* Support generating a TNSnames-style Oracle DS
+* Tested with ACF 1.1 and 1.2, and Provisioning 2.2
+* Merged some changes from Chida's Confluence deployment
+
+=== 0.0.1 - 15th May 2009
+
+* Tested with ACF 1.1
