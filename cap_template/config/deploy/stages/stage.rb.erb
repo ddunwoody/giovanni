@@ -3,13 +3,41 @@ role :app, '<%= stage %>.mycompany.tld'
 
 # TODO: configure your datasource values here
 # or delete if no datasource required
-
 #set :tomcat_ds, {
 #  :username => 'DB_USERNAME',
 #  :password => 'DB_PASSWORD',
 #  :host => 'db.mycompany.tld',
 #  :port => 1521,
 #  :sid => 'MY_SID'
+#}
+
+# For connecting to Oracle RAC, specify tns_entry instead of host, port and sid
+#set :tomcat_ds, {
+#  :username => 'DB_USERNAME',
+#  :password => 'DB_PASSWORD',
+#  :tns_entry => <<-TNS
+#    (DESCRIPTION_LIST =
+#      (LOAD_BALANCE = OFF)
+#      (FAILOVER = ON)
+#      (DESCRIPTION =
+#        (ADDRESS_LIST =
+#          (LOAD_BALANCE = ON)
+#          (FAILOVER = ON)
+#          (ADDRESS=(PROTOCOL = TCP)(HOST = db1.mycompany.tld)(PORT = 12345))
+#          (ADDRESS=(PROTOCOL = TCP)(HOST = db1.mycompany.tld)(PORT = 12345))
+#        )
+#        (CONNECT_DATA =
+#          (SERVICE_NAME = MY_SID.mycompany.tld)
+#          (FAILOVER_MODE =
+#            (TYPE = SESSION)
+#            (METHOD = BASIC)
+#            (RETRIES = 120)
+#            (DELAY = 5)
+#          )
+#        )
+#      )
+#    )
+#  TNS
 #}
 
 # You can set your <%= stage%>-environment-specific values here
