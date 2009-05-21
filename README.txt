@@ -58,7 +58,7 @@ The only required line in a <i>stage</i> is the <tt>role :app, 'foo'</tt> line, 
 
 In this file you will also find an example stanza for defining a datasource, if your application requires one.  This datasource will be made available in JNDI as <tt>jdbc/<i>Application</i>DS</tt>, for example <tt>jdbc/FooDS</tt> for an <tt>application</tt> called <i>foo</i>.
 
-An additional custom environment-specific configuration required for your deployment should also be specified here.
+An additional custom environment-specific configuration required for your deployment should also be specified here.  You may wish to look at both the Variables[http://wiki.capify.org/index.php/Variables] page on the Capistrano wiki and in Giovanni's <tt>lib/recipe/settings.rb</tt> for variables that may be of help to you.
 
 ==== config/deploy/recipes/*.rb
 

@@ -30,7 +30,12 @@
 #
 # ==== status
 # Displays whether the application is running, and the current REVISION
-
+#
+# ==== log
+# Displays the Tomcat log. Optionally number of existing lines to display with <tt>lines</tt>
+# e.g. cap <i>stage</i> deploy:log -S lines=1000
+#
+# Exit from viewing the log file with ^C
 
 namespace :deploy do
   desc 'Prepares one or more servers for deployment'
@@ -105,6 +110,14 @@ namespace :deploy do
   task :status, :roles => :app do
     app_server.send :status
     run "cat #{File.join(current_path, 'REVISION')}"
+  end
+
+  desc 'Display Tomcat log file'
+  task :log, :roles => :app do
+    lines = fetch(:lines, 100)
+    run "tail -n #{lines} -f #{File.join(log_path, 'catalina.out')}" do |ch, stream, out|
+      puts out
+    end
   end
 
   def dirs

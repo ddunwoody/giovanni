@@ -2,7 +2,8 @@
 
 * Rename <tt>deploy:clean</tt> to <tt>deploy:teardown</tt> to make it more explicit it's the opposite of <tt>deploy:setup</tt>
 * Extensively update RDocs
-* Add deploy:status
+* Add deploy:status which shows status and version of deployed application
+* Add deploy:log which tails the Tomcat log (catalina.out)
 
 === 0.0.2 - 20th May 2009
 
