@@ -107,9 +107,11 @@ The simplest example of a deployment can be found in ACF[https://collaborate.bt.
 
 Provisioning[https://collaborate.bt.com/svn/bt-dso/provisioning/trunk/provisioning-client/] demonstrates the usage of a recipe to {compute a version number}[https://collaborate.bt.com/svn/bt-dso/provisioning/trunk/provisioning-client/config/deploy/recipes/fix_version.rb].
 
+Storm[https://collaborate.bt.com/svn/bt-dso/storm/trunk/] (<b>note</b> not tested to production) demonstrates {overriding the values from the POM file}[https://collaborate.bt.com/svn/bt-dso/storm/trunk/config/deploy/recipes/fix_version.rb].
+
 Nexus[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/] demonstrates {rendering configuration at deployment time}[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/config/deploy/recipes/upload_nexus_config.rb].
 
-Bamboo[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/] will demonstrate how to deploy a third-party application without a POM file (<b>Note:</b> not yet done), as described immediately below.
+Bamboo[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/] (<b>note</b> work in progress) will demonstrate how to deploy a third-party application without a POM file, as described immediately below.
 
 === Deploying without a POM file
 
