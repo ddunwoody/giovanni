@@ -1,4 +1,5 @@
 README.txt
+History.txt
 Rakefile
 bin/giovannify
 cap_template/Capfile
