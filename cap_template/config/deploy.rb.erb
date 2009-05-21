@@ -1,7 +1,14 @@
 # Non environment-specific configuration goes into this file
 # Environment-specific configuration should go into a file in the config/deploy/stage directory
 
+# This will be defaulted if it can be read from the artifactId in pom.xml when giovannify is run
 set :application, '<%= application %>'
+
+# These values can be deleted if a pom.xml is present, as they are read from there
+# If pom.xml is present, you can override the values read from there by setting these
+# set :group_id, 'your_group_id_here'
+# set :artifact_id, 'your_artifact_id_here'
+# set :version, 'your_version_here'
 
 # You can override the default values by uncommenting and editing the lines below
 
