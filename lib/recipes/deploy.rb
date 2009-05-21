@@ -98,10 +98,6 @@ namespace :deploy do
     end
   end
 
-  # Migrate is a no-op for non-rails apps
-  task :migrate do
-  end
-
   def dirs
     [deploy_to, releases_path, log_path, tmp_path].join(' ')
   end
@@ -114,4 +110,24 @@ namespace :deploy do
   depend :remote, :command, 'java'
   depend :remote, :command, 'unzip'
   depend :remote, :command, "/etc/init.d/#{application}"
+
+  # Remove default tasks we don't want because they are RoR-specific
+  [:migrate, :migrations].each do |task_name|
+    task task_name do
+    end
+  end
+
+  namespace :pending do
+    [:default, :diff].each do |task_name|
+      task task_name do
+      end
+    end
+  end
+
+  namespace :web do
+    [:enable, :disable].each do |task_name|
+      task task_name do
+      end
+    end
+  end
 end
