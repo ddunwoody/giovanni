@@ -7,7 +7,7 @@
 # the _deploy_ namespace; they are not public (and therefore
 # not publically documented)
 module Giovanni::Plugins::AppServer
-  [:start, :stop, :restart].each do |method|
+  [:start, :stop, :restart, :status].each do |method|
     define_method method do
       sudo "/etc/init.d/#{application} #{method}"
     end

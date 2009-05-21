@@ -27,6 +27,9 @@
 #
 # ==== start, stop, restart
 # Starts, stops or restarts the Tomcat instance for _application_.
+#
+# ==== status
+# Displays whether the application is running, and the current REVISION
 
 
 namespace :deploy do
@@ -96,6 +99,12 @@ namespace :deploy do
     task task_name, :roles => :app do
       app_server.send task_name
     end
+  end
+
+  desc 'Display status of current application'
+  task :status, :roles => :app do
+    app_server.send :status
+    run "cat #{File.join(current_path, 'REVISION')}"
   end
 
   def dirs
