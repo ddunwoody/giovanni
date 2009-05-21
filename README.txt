@@ -1,6 +1,7 @@
 = Giovanni
 
-Giovanni is a Gem that provides helper methods for deploying Tomcat-based applications on RedHat Linux.
+Giovanni is a Gem that provides helper methods for installing Tomcat on RedHat Linux, and subsequently
+deploying WAR files from a Nexus repository onto the installed Tomcat instance.
 
 It consists of three main parts:
 
@@ -26,7 +27,7 @@ It is possible to deploy without a POM file being present, please see <i>Advance
 
 Type <tt>giovannify</tt>.  This will parse the POM file and generate a <tt>Capfile</tt> as well as a <tt>config</tt> directory.  Some editing of these deployment scripts is required in order to be able to deploy.  Impatient types can go immediately to the <i>Examples</i> section, but first let us explore the newly-generated deployment scripts.
 
-=== Deployment script layout
+=== Configure the deployment scripts for your application
 
 The main entry point for Capistrano is the <tt>Capfile</tt>.  You shouldn't normally need to edit this file, as it loads code from other files.
 
@@ -65,11 +66,51 @@ Any files you place in this directory are run as part of the deployment.  This c
 
 Creating a deployment that requires this sort of customisation is discouraged - deployments should be defined by convention rather than by application-specific rules.
 
-=== Examples
+=== Run your deployment
 
-=== Advanced Usage
+Once you have configured your application, you are ready to deploy!
 
-==== Deploying without a POM file
+==== Installing tomcat
+
+If the target machine (as defined in a <i>stage</i>) does not already have Tomcat installed, you can install it with <tt>cap <i>stage</i> tomcat:install</tt>.
+
+Similarly, Tomcat can be removed from a machine with <tt>cap <i>stage</i> tomcat:uninstall</tt>.
+
+The Tomcat uninstall will be unable to remove the <i>tomcat</i> group if any applications have been set up on that machine with <tt>deploy:setup</tt>.
+
+==== Setting up the machine for deployment
+
+Before deploying for the first time, you need to run <tt>cap <i>stage</i> deploy:setup</tt>.  This creates all of the required directories on the target server.
+
+Once setup is complete, it is a good idea to run <tt>cap <i>stage</i> deploy:check</tt> and fix any problems found.  <b>Note:</b> there is a bug where it will say that it cannot find <tt>`'</tt>.  This problem (only) can be safely ignored.
+
+==== Deploying
+
+If you are deploying for the first time, run <tt>cap <i>stage</i> deploy:cold</tt>.  Subsequent deployments should be executed using <tt>cap <i>stage</i> deploy</tt>.
+
+There are a number of tasks available in the deploy namespace:
+
+* <tt>deploy</tt>: Uploads release, symlinks it as current, and restarts Tomcat
+* <tt>deploy:cold</tt>: As <tt>deploy</tt>, but starts Tomcat instead of restarting it
+* <tt>deploy:update</tt>: Uploads release and symlinks it as current, but does not restart Tomcat
+* <tt>deploy:{start,stop,restart}</tt>: Starts, stops or restarts Tomcat
+* <tt>deploy:cleanup</tt>: Removes old releases (keeps most recent 5)
+
+The final commonly-useful task in is <tt>deploy:teardown</tt>.  This is the nuclear option, which removes all traces of the application from the target server.  The application's Tomcat instance should be stopped before running this.
+
+More information on the deployment tasks can be found in the RDocs[file:lib/recipes/deploy_rb.html].
+
+== Existing deployments using Giovanni
+
+The simplest example of a deployment can be found in ACF[https://collaborate.bt.com/svn/bt-dso/acf/trunk/webapp/].
+
+Provisioning[https://collaborate.bt.com/svn/bt-dso/provisioning/trunk/provisioning-client/] demonstrates the usage of a recipe to {compute a version number}[https://collaborate.bt.com/svn/bt-dso/provisioning/trunk/provisioning-client/config/deploy/recipes/fix_version.rb].
+
+Nexus[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/] demonstrates {rendering configuration at deployment time}[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/config/deploy/recipes/upload_nexus_config.rb].
+
+Bamboo[https://collaborate.bt.com/svn/bt-dso/nexus/trunk/] will demonstrate how to deploy a third-party application without a POM file (<b>Note:</b> not yet done), as described immediately below.
+
+=== Deploying without a POM file
 
 If you do not have a pom.xml file, for example if you are deploying a third-party app without customisation, you need to specify <tt>group_id</tt>, <tt>artifact_id</tt> and <i>version</i> in <tt>config/deploy.rb</tt>.
 
@@ -79,9 +120,6 @@ If you do not have a pom.xml file, for example if you are deploying a third-part
 
 This mechanism can also be used to override the values for these read from the POM file, if necessary.
 
-==== Computing a version number
-
-==== Rendering configuration at deployment time
 
 
 == Revision History
