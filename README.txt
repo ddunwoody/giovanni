@@ -91,6 +91,7 @@ If you are deploying for the first time, run <tt>cap <i>stage</i> deploy:cold</t
 There are a number of tasks available in the deploy namespace:
 
 * <tt>deploy</tt>: Uploads release, symlinks it as current, and restarts Tomcat
+* <tt>deploy:status</tt>: Shows whether the application is running, and the version currently in use
 * <tt>deploy:cold</tt>: As <tt>deploy</tt>, but starts Tomcat instead of restarting it
 * <tt>deploy:update</tt>: Uploads release and symlinks it as current, but does not restart Tomcat
 * <tt>deploy:{start,stop,restart}</tt>: Starts, stops or restarts Tomcat

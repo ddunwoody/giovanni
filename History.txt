@@ -2,6 +2,7 @@
 
 * Rename <tt>deploy:clean</tt> to <tt>deploy:teardown</tt> to make it more explicit it's the opposite of <tt>deploy:setup</tt>
 * Extensively update RDocs
+* Add deploy:status
 
 === 0.0.2 - 20th May 2009
 
