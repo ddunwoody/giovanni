@@ -17,6 +17,16 @@ See {this page}[http://wiki.capify.org/index.php/Default_Execution_Path] on the 
 
 == Usage
 
+=== Install Ruby and RubyGems
+
+Giovanni is tested with Ruby 1.8.7-p72 and RubyGems 1.3.3 on Linux.  It probably works on Mac OS X and probably doesn't work on Windows.
+
+=== Download and install Giovanni RubyGem
+
+Go to Bamboo[https://spangler.intra.btexact.com/bamboo/browse/DEPLOYMENT-GIOVANNI/latest] > Artifacts > Gem.
+
+Type <tt>sudo gem install -l giovanni-<i>version</i>.gem</tt>.  You will be prompted to install any dependent gems you don't already have (for example Capistrano).
+
 === Giovannify your project
 
 Change into the directory that contains the pom.xml file of the artifact you wish to deploy.  This
