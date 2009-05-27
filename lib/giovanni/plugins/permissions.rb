@@ -14,9 +14,9 @@ module Giovanni::Plugins::Permissions
   # +group+: change file and directory group owner to this group
   def normalise path, options = {}
     script.run_all <<-CMDS
-      bash -c 'find #{path} -type d | xargs -r chmod 770'
-      bash -c 'find #{path} -type f | xargs -r chmod 660'
-      bash -c 'find #{path} -type f -name \'*.sh\' | xargs -r chmod 770'
+      bash -c 'find #{path} -type d -print0 | xargs -0 -r chmod 770'
+      bash -c 'find #{path} -type f -print0 | xargs -0 -r chmod 660'
+      bash -c 'find #{path} -type f -name \'*.sh\' -print0 | xargs -0 -r chmod 770'
     CMDS
 
     sudo "chown -R #{options[:owner]} #{path}" if options.has_key? :owner
