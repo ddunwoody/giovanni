@@ -16,6 +16,7 @@ lib/giovanni/plugins/app_server.rb
 lib/giovanni/scm/nexus.rb
 lib/recipes/deploy.rb
 lib/recipes/tomcat.rb
+lib/recipes/jmeter.rb
 lib/recipes/settings.rb
 lib/templates/init.d/tomcat.erb
 lib/templates/tomcat/bin/setenv.sh.erb
