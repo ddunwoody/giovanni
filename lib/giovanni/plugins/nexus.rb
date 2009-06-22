@@ -34,7 +34,11 @@ module Giovanni::Plugins::Nexus
   end
 
   def url
-    "#{folder}/#{filename}"
+    if override_url
+	override_url
+    else
+	"#{folder}/#{filename}"
+    end
   end
 
   def folder
@@ -43,7 +47,11 @@ module Giovanni::Plugins::Nexus
 
   # figure out which repository in Nexus to look at
   def division
-    is_snapshot? ? 'snapshots' : 'releases'
+    if override_repository_area
+	override_repository_area
+    else
+	is_snapshot? ? 'snapshots' : 'releases'
+    end
   end
 
   def is_snapshot?
@@ -56,6 +64,16 @@ module Giovanni::Plugins::Nexus
       # FIXME: this is hideously ugly and needs to be refactored.
       if respond_to? :configuration
         raise Capistrano::Error, "you must set a #{var} with :set #{var}, foo" unless variable(var)
+        variable(var)
+      else
+	fetch(var)
+      end
+    end
+  end
+  
+  [:override_repository_area, :override_url].each do |var|
+    define_method var do
+      if respond_to? :configuration
         variable(var)
       else
 	fetch(var)
