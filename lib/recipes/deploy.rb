@@ -94,6 +94,13 @@ namespace :deploy do
 	    # TODO: factor out downloading from maven repo (also for tomcat:install task)
            run "wget -nv http://spangler.intra.btexact.com:8081/nexus/content/repositories/thirdparty/oracle/oracle-jdbc/10.1.0.2.0/oracle-jdbc-10.1.0.2.0.jar -P #{File.join(latest_release, 'lib')}"
 	end
+        # Install the tns file if the install_tns variable is set to true
+        if exists?(:install_tns) and exists?(:tnsnames_download_url)
+           tns_dir = fetch(:install_tns_dir, "/var/lib/oracle")
+           sudo "mkdir -p #{tns_dir}"
+           sudo "wget -q -O '#{tns_dir}/tnsnames.ora' '#{tnsnames_download_url}'"
+           sudo "chgrp -R tomcat #{tns_dir}"
+        end
        else
          utils.install_template(template, destination, :user => user)
        end
