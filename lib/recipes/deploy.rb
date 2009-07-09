@@ -39,7 +39,7 @@
 
 namespace :deploy do
   desc 'Prepares one or more servers for deployment'
-  task :setup, :roles => :app do
+  task :setup do
     script.run_all <<-CMDS
       /usr/sbin/useradd -m -g tomcat #{application}
       mkdir -p #{dirs}
@@ -56,7 +56,7 @@ namespace :deploy do
   end
 
   desc 'Removes a deployment setup from one or more servers'
-  task :teardown, :roles => :app, :on_error => :continue do
+  task :teardown, :on_error => :continue do
     script.run_all <<-CMDS
       rm -rf #{dirs}
       /usr/sbin/userdel -rf #{application}
@@ -67,7 +67,7 @@ namespace :deploy do
 
   # This task is run by Capistrano after uploading code and symlinking current, but before
   # restarting the app server
-  task :finalize_update, :roles => :app do
+  task :finalize_update do
     set :run_method, :run
     script.run_all <<-CMDS
       ln -nfs #{log_path} #{latest_release}/logs
