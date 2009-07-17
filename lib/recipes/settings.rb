@@ -14,6 +14,8 @@ set :webapps_dir, 'webapps'
 set :source, Giovanni::SCM::Nexus.new(self)
 set :repository, 'http://spangler.intra.btexact.com:8081/nexus/content/repositories'
 
+set :user, ENV['USER'] unless exists?(:user)
+
 [:group_id, :artifact_id, :version].each do |var|
   if exists?(var)
     puts "Using explicitly-set #{var} of '#{fetch(var)}'"
