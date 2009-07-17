@@ -91,8 +91,7 @@ namespace :deploy do
 	end
 	# Get the oracle jar if there is a tomcat_ds or if the install_oracle_jar variable is set to true
 	if exists?(:tomcat_ds) or :install_oracle_jar
-	    # TODO: factor out downloading from maven repo (also for tomcat:install task)
-           run "wget -nv http://spangler.intra.btexact.com:8081/nexus/content/repositories/thirdparty/oracle/oracle-jdbc/10.1.0.2.0/oracle-jdbc-10.1.0.2.0.jar -P #{File.join(latest_release, 'lib')}"
+           run "wget -nv #{repository}/thirdparty/oracle/oracle-jdbc/10.1.0.2.0/oracle-jdbc-10.1.0.2.0.jar -P #{File.join(latest_release, 'lib')}"
 	end
         # Install the tns file if the install_tns variable is set to true
         if exists?(:install_tns) and exists?(:tnsnames_download_url)

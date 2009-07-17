@@ -31,7 +31,7 @@ namespace :tomcat do
     sudo '/usr/sbin/groupadd tomcat'
     sudo "/usr/sbin/usermod -a -G tomcat #{user}"
 
-    build.install('tomcat', :url => 'http://spangler.intra.btexact.com:8081/nexus/content/repositories/thirdparty/com/bt/collaborate/apache-tomcat/6.0.18/apache-tomcat-6.0.18.tar.gz') do |dir|
+    build.install('tomcat', :url => "#{repository}/thirdparty/com/bt/collaborate/apache-tomcat/6.0.18/apache-tomcat-6.0.18.tar.gz") do |dir|
       script.run_all <<-CMDS
         mkdir -p /opt/apache-tomcat-6.0.18
         mv #{dir}/* /opt/apache-tomcat-6.0.18
