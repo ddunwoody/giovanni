@@ -12,7 +12,9 @@ set :tmp_path, "/var/tmp/#{application}"
 set :webapps_dir, 'webapps'
 
 set :source, Giovanni::SCM::Nexus.new(self)
-set :repository, 'http://spangler.intra.btexact.com:8081/nexus/content/repositories'
+set :repository, 'http://collaborate.bt.com/nexus/content/repositories'
+set :releases_repo, 'bt-dso-releases'
+set :snapshots_repo, 'bt-dso-snapshots'
 
 set :user, ENV['USER'] unless exists?(:user)
 
