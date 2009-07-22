@@ -18,10 +18,11 @@ module Giovanni
         revision
       end
 
-      # returns a command to download the WAR file from Nexus into the
-      # +webapps+ directory of the latest release
+      # returns a command to download the file from Nexus into the
+      # +dest_dir+ directory of the latest release (which defaults to the
+      # +webapps_dir+)
       def checkout(revision, destination)
-	download_command(File.join(destination, variable(:webapps_dir)))
+	download_command(File.join(destination, variable(:artifact_dest_dir)))
       end
     end
   end
