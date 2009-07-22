@@ -30,8 +30,7 @@ Type <tt>sudo gem install -l giovanni-<i>version</i>.gem</tt>.  You will be prom
 === Giovannify your project
 
 Change into the directory that contains the pom.xml file of the artifact you wish to deploy.  This
-*must* be a WAR arfifact (<tt><packaging>war</packaging></tt> in Maven terminology), as Giovanni
-only supports deploying WARs.
+should be a WAR or EAR arfifact if you are deploying to Tomcat.
 
 It is possible to deploy without a POM file being present, please see <i>Advanced Usage</i> below for details.
 
@@ -130,6 +129,7 @@ If you do not have a pom.xml file, for example if you are deploying a third-part
 * <tt>set :group_id, 'your_group_id_here'</tt>
 * <tt>set :artifact_id, 'your_artifact_id_here'</tt>
 * <tt>set :version, 'your_version_here'</tt>
+* <tt>set :packaging, 'your_packaging_here'</tt>
 
 This mechanism can also be used to override the values for these read from the POM file, if necessary.
 

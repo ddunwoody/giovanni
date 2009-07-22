@@ -19,13 +19,14 @@ set :snapshots_repo, 'bt-dso-snapshots'
 
 set :user, ENV['USER'] unless exists?(:user)
 
-[:group_id, :artifact_id, :version].each do |var|
+[:group_id, :artifact_id, :version, :packaging].each do |var|
   if exists?(var)
     puts "Using explicitly-set #{var} of '#{fetch(var)}'"
   elsif File.exist?('pom.xml')
     pom = REXML::Document.new(File.open('pom.xml'))
-    element = REXML::XPath.first(pom, "/project/#{var.to_s.gsub('_i', 'I')}")
-    element ||= REXML::XPath.first(pom, "/project/parent/#{var.to_s.gsub('_i', 'I')}")
+    elementName = var.to_s.gsub('_i', 'I')
+    element = REXML::XPath.first(pom, "/project/#{elementName}")
+    element ||= REXML::XPath.first(pom, "/project/parent/#{elementName}")
     set var, element.text
     puts "Using #{var} of '#{element.text}' read from pom.xml"
   else

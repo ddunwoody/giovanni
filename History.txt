@@ -1,4 +1,9 @@
-=== 0.0.3 - In development
+=== 0.0.4 - In development
+
+* Read <tt>packaging</tt> from POM file if present
+* Allow downloading from nexus to a location other than 'webapps' by setting <tt>artifact_dest_dir</tt>
+
+=== 0.0.3 - 22nd July 2009
 
 * Rename <tt>deploy:clean</tt> to <tt>deploy:teardown</tt> to make it more explicit it's the opposite of <tt>deploy:setup</tt>
 * Extensively update RDocs

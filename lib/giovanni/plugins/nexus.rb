@@ -15,9 +15,9 @@ module Giovanni::Plugins::Nexus
       metadata = Document.new(response.body)
       timestamp = XPath.first(metadata, '//timestamp').text
       build_number = XPath.first(metadata, '//buildNumber').text
-      "#{artifact_id}-#{version.gsub(/-SNAPSHOT$/, '')}-#{timestamp}-#{build_number}.war"
+      "#{artifact_id}-#{version.gsub(/-SNAPSHOT$/, '')}-#{timestamp}-#{build_number}.#{packaging}"
     else
-      "#{artifact_id}-#{version}.war"
+      "#{artifact_id}-#{version}.#{packaging}"
     end
   end
 
@@ -59,7 +59,7 @@ module Giovanni::Plugins::Nexus
     version.end_with?('SNAPSHOT')
   end
 
-  [:repository, :group_id, :artifact_id, :version].each do |var|
+  [:repository, :group_id, :artifact_id, :version, :packaging].each do |var|
     define_method var do
       # we can be called as a plugin, but we are also included in the Nexus SCM class
       # FIXME: this is hideously ugly and needs to be refactored.
