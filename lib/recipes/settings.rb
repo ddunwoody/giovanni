@@ -7,10 +7,11 @@ set :stage_dir, 'config/deploy/stages'
 set :templates_dirs, [ File.expand_path(File.join(File.dirname(__FILE__), '..', 'templates')) ]
 
 set :deploy_to, "/var/lib/#{application}"
-set :log_path, "/var/log/#{application}"
-set :tmp_path, "/var/tmp/#{application}"
-set :webapps_dir, 'webapps'
+set :log_path, "/var/log/#{application}" unless exists?(:log_path)
+set :tmp_path, "/var/tmp/#{application}" unless exists?(:tmp_path)
 set :artifact_dest_dir, fetch(:webapps_dir) unless exists?(:artifact_dest_dir)
+
+set :webapps_dir, 'webapps'
 
 set :source, Giovanni::SCM::Nexus.new(self)
 set :repository, 'http://collaborate.bt.com/nexus/content/repositories'
