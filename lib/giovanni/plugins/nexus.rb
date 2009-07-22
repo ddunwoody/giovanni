@@ -43,7 +43,16 @@ module Giovanni::Plugins::Nexus
 
   # figure out which repository in Nexus to look at
   def division
-    is_snapshot? ? variable(:snapshots_repo) : variable(:releases_repo)
+    if is_snapshot?
+      var = :snapshots_repo
+    else
+      var = :releases_repo
+    end
+    if respond_to? :configuration
+      variable(var)
+    else
+      fetch(var)
+    end
   end
 
   def is_snapshot?
