@@ -3,14 +3,25 @@
 # This existence of this module may be a mistake in it's current
 # form; we need to expose a download method to users of Giovanni,
 # but this is not the right way to do it.
+
+require 'net/https'
+
 module Giovanni::Plugins::Nexus
   include REXML
-
+  
   # Returns the filename of a WAR file, handling SNAPSHOT versions
   def filename
     if is_snapshot?
       metadata_url = folder + '/maven-metadata.xml'
-      response = Net::HTTP.get_response(URI.parse(metadata_url))
+      httpsuri = URI.parse(metadata_url)
+      request = Net::HTTP.new(httpsuri.host, httpsuri.port)
+
+      if httpsuri.port == 443
+        request.use_ssl = true
+        request.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+
+      response = request.get(httpsuri.path)
       raise Capistrano::Error, "Unable to get snapshot metadata from #{metadata_url}: #{response.inspect}" unless response.code == '200'
       metadata = Document.new(response.body)
       timestamp = XPath.first(metadata, '//timestamp').text
