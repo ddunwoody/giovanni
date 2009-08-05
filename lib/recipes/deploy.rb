@@ -91,13 +91,13 @@ namespace :deploy do
 	end
 	# Get the oracle jar if there is a tomcat_ds or if the install_oracle_jar variable is set to true
 	if exists?(:tomcat_ds) or :install_oracle_jar
-           run "wget -nv #{repository}/thirdparty/oracle/oracle-jdbc/10.1.0.2.0/oracle-jdbc-10.1.0.2.0.jar -P #{File.join(latest_release, 'lib')}"
+           run "#{http_get_method} -nv #{repository}/thirdparty/oracle/oracle-jdbc/10.1.0.2.0/oracle-jdbc-10.1.0.2.0.jar -P #{File.join(latest_release, 'lib')}"
 	end
         # Install the tns file if the install_tns variable is set to true
         if exists?(:install_tns) and exists?(:tnsnames_download_url)
            tns_dir = fetch(:install_tns_dir, "/var/lib/oracle")
            sudo "mkdir -p #{tns_dir}"
-           sudo "wget -q -O '#{tns_dir}/tnsnames.ora' '#{tnsnames_download_url}'"
+           sudo "#{http_get_method} -q -O '#{tns_dir}/tnsnames.ora' '#{tnsnames_download_url}'"
            sudo "chgrp -R tomcat #{tns_dir}"
         end
        else

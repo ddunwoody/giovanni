@@ -41,7 +41,7 @@ module Giovanni::Plugins::Nexus
   # Called by Giovanni::SCM::Nexus to get the command to do the download
   def download_command(destination)
     # TODO: sha1sum
-    "mkdir -p #{destination} && wget #{verbose} #{url} -P #{destination}"
+    "mkdir -p #{destination} && #{http_get_method} #{verbose} #{url} -P #{destination}"
   end
 
   def url
@@ -70,7 +70,7 @@ module Giovanni::Plugins::Nexus
     version.end_with?('SNAPSHOT')
   end
 
-  [:repository, :group_id, :artifact_id, :version, :packaging].each do |var|
+  [:repository, :group_id, :artifact_id, :version, :packaging, :http_get_method, :division].each do |var|
     define_method var do
       # we can be called as a plugin, but we are also included in the Nexus SCM class
       # FIXME: this is hideously ugly and needs to be refactored.
