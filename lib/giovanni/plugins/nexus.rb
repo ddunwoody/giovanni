@@ -78,7 +78,7 @@ module Giovanni::Plugins::Nexus
         raise Capistrano::Error, "you must set a #{var} with :set #{var}, foo" unless variable(var)
         variable(var)
       else
-	fetch(var)
+	    fetch(var)
       end
     end
   end

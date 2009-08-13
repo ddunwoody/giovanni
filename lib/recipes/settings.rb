@@ -12,7 +12,6 @@ set :tmp_path, "/var/tmp/#{application}" unless exists?(:tmp_path)
 set :webapps_dir, 'webapps'
 set :artifact_dest_dir, fetch(:webapps_dir) unless exists?(:artifact_dest_dir)
 
-
 set :source, Giovanni::SCM::Nexus.new(self)
 set :repository, 'https://collaborate.bt.com/nexus/content/repositories'
 set :releases_repo, 'bt-dso-releases'
