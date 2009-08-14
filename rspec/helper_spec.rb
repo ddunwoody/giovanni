@@ -7,6 +7,6 @@ describe Helper do
   end
 
   it "should get url" do
-    @helper.url_name.should == 'foobar'
+    @helper.url_name.should == 'foo'
   end
 end
