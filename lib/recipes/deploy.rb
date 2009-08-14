@@ -37,6 +37,8 @@
 #
 # Exit from viewing the log file with ^C
 
+require File.join(File.dirname(__FILE__), "../utils/helper")
+
 namespace :deploy do
   desc 'Prepares one or more servers for deployment'
   task :setup do
@@ -74,7 +76,7 @@ namespace :deploy do
       ln -nfs #{tmp_path} #{latest_release}/temp
       mkdir #{['bin', 'conf', 'lib', 'work'].map { |d| File.join(latest_release, d) }.join(' ')}
       cp /opt/tomcat/conf/* #{latest_release}/conf
-      unzip -q #{File.join(latest_release, webapps_dir, nexus.filename)} -d #{File.join(latest_release, webapps_dir, war_file_name)}
+      unzip -q #{File.join(latest_release, webapps_dir, nexus.filename)} -d #{File.join(latest_release, webapps_dir, url_name)}
       rm #{File.join(latest_release, webapps_dir, nexus.filename)}
     CMDS
 
@@ -106,11 +108,6 @@ namespace :deploy do
     end
 
     permissions.normalise latest_release, :owner => application, :group => 'tomcat'
-  end
-
-  #Bit dodgy here :-)
-  def war_file_name
-    fetch(:war_file_name, fetch(:application))
   end  
 
   [:start, :stop, :restart].each do |task_name|
