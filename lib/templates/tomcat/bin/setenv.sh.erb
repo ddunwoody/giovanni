@@ -1,1 +1,2 @@
 JAVA_OPTS="-Djava.awt.headless=true <%= fetch(:tomcat_java_opts, '-Xms512m -Xmx512m') %>"
+CATALINA_TMPDIR="<%= fetch(:java_io_tmpdir) %>"
