@@ -3,12 +3,18 @@ include FileUtils
 require 'yaml'
  
 require 'rubygems'
-%w[rake hoe capistrano capitate].each do |req_gem|
+{'hoe' => 'hoe' , 
+  'capistrano' => 'capistrano', 
+  'capitate' => 'capitate', 
+  'capistrano-ext' => 'capistrano/ext/version', 
+  'active_support' =>'activesupport', 
+  'rspec' => 'spec', 
+  'ci_reporter' => 'ci/reporter/version'}.each_pair do |gem_name, requirement|
   begin
-    require req_gem
+    require requirement
   rescue LoadError
-    puts "This Rakefile requires the '#{req_gem}' RubyGem."
-    puts "Installation: (sudo) gem install #{req_gem} -y"
+    puts "This Rakefile requires the '#{gem_name}' RubyGem."
+    puts "Installation: (sudo) gem install #{gem_name} -y"
     exit
   end
 end
