@@ -1,8 +1,28 @@
 === 0.2.0
 
+This release fixes the outstanding bugs that required you to set http_get_method,
+url_name and division.
+
+You should no longer need to set division explicitly.
+
+If you are currently setting url_name to deploy to a context-root that doesn't
+match the application variable's value, you will need to set context_root instead.
+If you are only setting url_name to the same as application, you no longer need
+to set it.
+
+If you are setting http_get_method in order to pass http_proxy or https_proxy
+environment variables to wget, then set proxy instead to a URL (for example to
+'http://proxy.intra.bt.com:8080/').  Other uses of http_get_method are no
+longer supported.
+
+Detailed changes:
+
 * Update documentation to say that 'packaging' must be set if no POM file is provided
-* Replace :http_get_method with :proxy, as that was all it was ever used for
+* Default :division to 'public'
+* Replace :http_get_method with :proxy and change how wget command is built
+* Remote (rarely used) support for scm_verbose option in Nexus SCM module
 * Rename 'url_name' variable to 'context_root'
+* Fix defaulting of 'url_name' to value of 'application' variable
 
 === 0.0.4
 
