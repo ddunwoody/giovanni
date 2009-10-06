@@ -18,7 +18,12 @@ set :releases_repo, 'bt-dso-releases'
 set :snapshots_repo, 'bt-dso-snapshots'
 
 set :division, 'public' unless exists?(:division)
-set :http_get_method, 'wget -nv' unless exists?(:http_get_method)
+
+if exists?(:proxy)
+  set :wget, "http_proxy=#{proxy} https_proxy=#{proxy} wget"
+else
+  set :wget, 'wget'
+end
 
 set :user, ENV['USER'] unless exists?(:user)
 

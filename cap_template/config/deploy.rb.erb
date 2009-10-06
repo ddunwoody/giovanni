@@ -4,15 +4,20 @@
 # This will be defaulted if it can be read from the artifactId in pom.xml when giovannify is run
 set :application, '<%= application %>'
 
-# These values can be deleted if a pom.xml is present, as they are read from there
-# If pom.xml is present, you can override the values read from there by setting these
-# set :group_id, 'your_group_id_here'
-# set :artifact_id, 'your_artifact_id_here'
-# set :version, 'your_version_here'
-# set :packaging, 'your_packaging_here'
+# If you have a Maven POM file, you can delete this section
+# If not, you must specify these values so that the EAR/WAR can be downloaded from the repository
+# If both a POM and these lines are present, these lines take precedence
+#set :group_id, 'your_group_id_here'
+#set :artifact_id, 'your_artifact_id_here'
+#set :version, 'your_version_here'
+#set :packaging, 'your_packaging_here'
+
+# If you need to explicitly set a proxy for wget, then specify it here
+# This value is used to set http_proxy and https_proxy when invoking wget
+#set :proxy, 'http://proxy.intra.bt.com:8080/'
+
 
 # You can override the default values by uncommenting and editing the lines below
-
 #set :tomcat_http_port, 8080
 #set :tomcat_shutdown_port, 8005
 #set :tomcat_java_opts, '-Xms512m -Xmx512m'

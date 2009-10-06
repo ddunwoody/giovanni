@@ -1,6 +1,7 @@
 === 0.1.6
 
 * Update documentation to say that 'packaging' must be set if no POM file is provided
+* Replace :http_get_method with :proxy, as that was all it was ever used for
 
 === 0.0.4
 

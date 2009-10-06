@@ -41,7 +41,7 @@ module Giovanni::Plugins::Nexus
   # Called by Giovanni::SCM::Nexus to get the command to do the download
   def download_command(destination)
     # TODO: sha1sum
-    "mkdir -p #{destination} && #{http_get_method} #{verbose} #{url} -P #{destination}"
+    "mkdir -p #{destination} && #{wget} -q #{url} -P #{destination}"
   end
 
   def url
@@ -70,10 +70,10 @@ module Giovanni::Plugins::Nexus
     version.end_with?('SNAPSHOT')
   end
 
-  [:repository, :group_id, :artifact_id, :version, :packaging, :http_get_method, :division].each do |var|
+  # we can be called as a plugin, but we are also included in the Nexus SCM class
+  # FIXME: this is hideously ugly and needs to be refactored.
+  [:repository, :group_id, :artifact_id, :version, :packaging, :wget, :division].each do |var|
     define_method var do
-      # we can be called as a plugin, but we are also included in the Nexus SCM class
-      # FIXME: this is hideously ugly and needs to be refactored.
       if respond_to? :configuration
         raise Capistrano::Error, "you must set a #{var} with :set #{var}, foo" unless variable(var)
         variable(var)
@@ -85,10 +85,6 @@ module Giovanni::Plugins::Nexus
 
   def group_path
     group_id.gsub('.', '/')
-  end
-
-  def verbose
-    configuration[:scm_verbose] ? nil : '--quiet'
   end
 end
 
