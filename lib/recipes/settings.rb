@@ -30,6 +30,6 @@ set :user, ENV['USER'] unless exists?(:user)
     set var, element.text
     puts "Using #{var} of '#{element.text}' read from pom.xml"
   else
-    raise Capistrano::Error, 'Either pom.xml must exist in the current directory, or group_id, artifact_id and version must be explicitly set'
+    raise Capistrano::Error, 'Either pom.xml must exist in the current directory, or group_id, artifact_id, version and packaging must be explicitly set'
   end
 end
