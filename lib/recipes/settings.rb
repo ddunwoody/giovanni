@@ -17,6 +17,9 @@ set :repository, 'https://collaborate.bt.com/artefacts/content/repositories'
 set :releases_repo, 'bt-dso-releases'
 set :snapshots_repo, 'bt-dso-snapshots'
 
+set :division, 'public' unless exists?(:division)
+set :http_get_method, 'wget -nv' unless exists?(:http_get_method)
+
 set :user, ENV['USER'] unless exists?(:user)
 
 [:group_id, :artifact_id, :version, :packaging].each do |var|
