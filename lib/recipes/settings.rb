@@ -19,7 +19,7 @@ set :snapshots_repo, 'bt-dso-snapshots'
 
 set :division, 'public' unless exists?(:division)
 
-set :url_name, fetch(:application) unless exists?(:url_name)
+set :context_root, fetch(:application) unless exists?(:context_root)
 
 if exists?(:proxy)
   set :wget, "http_proxy=#{proxy} https_proxy=#{proxy} wget"

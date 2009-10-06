@@ -1,7 +1,8 @@
-=== 0.1.6
+=== 0.2.0
 
 * Update documentation to say that 'packaging' must be set if no POM file is provided
 * Replace :http_get_method with :proxy, as that was all it was ever used for
+* Rename 'url_name' variable to 'context_root'
 
 === 0.0.4
 
