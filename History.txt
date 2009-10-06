@@ -1,4 +1,8 @@
-=== 0.0.4 - In development
+=== 0.1.6
+
+* Update documentation to say that 'packaging' must be set if no POM file is provided
+
+=== 0.0.4
 
 * Read <tt>packaging</tt> from POM file if present
 * Allow downloading from nexus to a location other than 'webapps' by setting <tt>artifact_dest_dir</tt>
