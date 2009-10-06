@@ -23,4 +23,3 @@ lib/templates/tomcat/conf/catalina.properties
 lib/templates/tomcat/conf/context.xml.erb
 lib/templates/tomcat/conf/logging.properties
 lib/templates/tomcat/conf/server.xml.erb
-lib/utils/helper.rb

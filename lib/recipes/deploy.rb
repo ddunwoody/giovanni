@@ -37,8 +37,6 @@
 #
 # Exit from viewing the log file with ^C
 
-require File.join(File.dirname(__FILE__), "../utils/helper")
-
 namespace :deploy do
   desc 'Prepares one or more servers for deployment'
   task :setup do
