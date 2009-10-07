@@ -19,7 +19,7 @@
      define subcomponents such as "Valves" at this level.
      Documentation at /docs/config/server.html
  -->
- <Server port="<%= fetch(:tomcat_shutdown_port, 8005) %>" shutdown="th1sIsAB1gS3cr3t!w00t">
+ <Server port="<%= fetch(:tomcat_shutdown_port) %>" shutdown="th1sIsAB1gS3cr3t!w00t">
 
   <!--APR library loader. Documentation at /docs/apr.html -->
   <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
@@ -63,7 +63,7 @@
          Java AJP  Connector: /docs/config/ajp.html
          APR (HTTP/AJP) Connector: /docs/apr.html
     -->
-    <Connector port="<%= fetch(:tomcat_http_port, 8080) %>" protocol="HTTP/1.1"
+    <Connector port="<%= fetch(:tomcat_http_port) %>" protocol="HTTP/1.1"
 	    connectionTimeout="20000" useBodyEncodingForURI="true" />
     <!-- A "Connector" using the shared thread pool-->
     <!--

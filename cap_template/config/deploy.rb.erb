@@ -22,5 +22,5 @@ set :application, '<%= application %>'
 
 # You can override the default values by uncommenting and editing the lines below
 #set :tomcat_http_port, 8080
-#set :tomcat_shutdown_port, 8005
+#set :tomcat_shutdown_port, tomcat_http_port + 1000
 #set :tomcat_java_opts, '-Xms512m -Xmx512m'

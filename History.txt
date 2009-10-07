@@ -1,3 +1,14 @@
+=== 0.2.1
+
+tomcat_shutdown_port now defaults to tomcat_http_port+1000.  This means that it
+now defaults to 9080 instead of 8005, and, more importantly, it no longer needs
+to be explicitly specified if you're following the DSO convention of shutdown
+port being 1000 higher than the HTTP port.
+
+The tomcat_* variables are now defined in settings.rb, instead of being defaulted
+inline in the erb templates.  This continues the trend of all default values being
+explictly listed in settings.rb.
+
 === 0.2.0
 
 This release fixes the outstanding bugs that required you to set http_get_method,

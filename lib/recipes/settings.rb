@@ -21,6 +21,10 @@ set :division, 'public' unless exists?(:division)
 
 set :context_root, fetch(:application) unless exists?(:context_root)
 
+set :tomcat_http_port, 8080 unless exists?(:tomcat_http_port)
+set :tomcat_shutdown_port, tomcat_http_port + 1000 unless exists?(:tomcat_shutdown_port)
+set :tomcat_java_opts, '-Xms512m -Xmx512m' unless exists?(:tomcat_java_opts)
+
 if exists?(:proxy)
   set :wget, "http_proxy=#{proxy} https_proxy=#{proxy} wget"
 else

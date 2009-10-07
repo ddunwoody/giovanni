@@ -1,4 +1,4 @@
-JAVA_OPTS="-Djava.awt.headless=true <%= fetch(:tomcat_java_opts, '-Xms512m -Xmx512m') %>"
+JAVA_OPTS="-Djava.awt.headless=true <%= fetch(:tomcat_java_opts) %>"
 
 <% begin %>
 	<% if  fetch(:java_io_tmpdir) %> 
